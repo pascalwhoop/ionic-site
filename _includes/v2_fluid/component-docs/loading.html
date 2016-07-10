@@ -26,3 +26,30 @@ presentLoading() {
   this.nav.present(loading);
 }
 ```
+
+<h3 class="section-nav">Showing and hiding using Promises</h3>
+
+Usually the loading indicates some form of asynchronous activity. To programatically show and hide the loading ui, you can use the returned ViewController reference to show and hide it based on the network requests success of failure.
+
+```typescript
+submit(data: any){
+    //create loading notification
+    let loading = Loading.create({
+        content: "Submitting ..."
+    });
+    //display it
+    this.navCtrl.present(loading);      
+            
+    //some backend service that returns a promise
+    this.backend.submitData(data)
+        .then(response =>{
+            //hide it on success      
+            loading.dismiss();
+        })
+        .catch(error =>{
+            //hide it on success      
+            loading.dismiss();
+            //still better handle that error somehow
+        });
+}
+```
